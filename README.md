@@ -1,4 +1,4 @@
-Jeu de la Vie - Conway's Game of Life
+<h1>Jeu de la Vie - Conway's Game of Life<h1/>
 📋 Description du Projet
 Implémentation en C++ orientée objet du célèbre Jeu de la Vie de John Conway, un automate cellulaire qui simule l'évolution d'une population de cellules selon des règles simples mais fascinantes.
 
@@ -9,5 +9,3 @@ Naissance : Une cellule morte avec exactement 3 voisines vivantes devient vivant
 Survie : Une cellule vivante avec 2 ou 3 voisines vivantes reste vivante
 Mort : Dans tous les autres cas, la cellule meurt (solitude ou surpopulation)
 Le voisinage d'une cellule est constitué de ses 8 cellules adjacentes (horizontales, verticales et diagonales).
-
-🏗️ Architecture (Principes POO & SOLID)
