@@ -1,13 +1,15 @@
 classDiagram
-    %% Ajouterl'extension Mermaid Chart dans VSCode
-    %% Pour afficher, Crtl+Shift+P -> "Markdown: Preview Mermaid Diagram"
+    
+    %% Ajouter l'extension Mermaid Chart 
+    %% Crtl+Shift+P -> "Preview Mermaid Diagram"
 
     class CellState {
         <<abstract>>
         #alive: bool
         +CellState(bool)
         +isAlive() bool
-      }
+        +~CellState()
+    }
     
     class AliveState {
         +AliveState()
@@ -16,38 +18,49 @@ classDiagram
     class DeadState {
         +DeadState()
     }
-    
+
 
     class Cell {
         -state: CellState*
         -nextState: CellState*
         +Cell()
+        +~Cell()
         +isAlive() bool
         +setState(CellState*) void
         +prepareNext(CellState*) void
         +update() void
     }
     
+
     class Grid {
         -cells: vector~vector~Cell~~
         -rows: int
         -cols: int
-        +Grid(int, int)
-        +loadFromFile(string) void
-        +getCell(int, int) Cell&
-        +countNeighbors(int, int) int
+        +Grid(int rows, int cols)
+        +loadFromFile(string filename) void
+        +getCell(int row, int col) Cell&
+        +countNeighbors(int row, int col) int
+        +getRows() int
+        +getCols() int
     }
     
+
+    class Rule {
+        +conwayRule(bool currentState, int neighbors) bool
+    }
+    
+
     class Game {
         -grid: Grid
         -rule: Rule*
         -iteration: int
-        +Game(string filename)
+        +Game(string filename, Rule* rule)
+        +~Game()
         +step() void
-        +runConsole(int n) void
-        +Display(Grid)
-        +BasicRules (bool state, int neighbors) void
+        +runConsole(int steps) void
+        +display() void
         +getGrid() Grid&
+        +getIteration() int
     }
     
     
@@ -55,4 +68,5 @@ classDiagram
     CellState <|-- DeadState
     Cell --> CellState
     Grid *-- Cell
-    Game --> Grid
+    Game *-- Grid 
+    Game --> Rule
