@@ -1,0 +1,58 @@
+classDiagram
+    
+    %% Pour afficher, Crtl+Shift+P -> "Markdown: Preview Mermaid Diagram"
+
+    class CellState {
+        <<abstract>>
+        #alive: bool
+        +CellState(bool)
+        +isAlive() bool
+      }
+    
+    class AliveState {
+        +AliveState()
+    }
+    
+    class DeadState {
+        +DeadState()
+    }
+    
+
+    class Cell {
+        -state: CellState*
+        -nextState: CellState*
+        +Cell()
+        +isAlive() bool
+        +setState(CellState*) void
+        +prepareNext(CellState*) void
+        +update() void
+    }
+    
+    class Grid {
+        -cells: vector~vector~Cell~~
+        -rows: int
+        -cols: int
+        +Grid(int, int)
+        +loadFromFile(string) void
+        +getCell(int, int) Cell&
+        +countNeighbors(int, int) int
+    }
+    
+    class Game {
+        -grid: Grid
+        -rule: Rule*
+        -iteration: int
+        +Game(string filename)
+        +step() void
+        +runConsole(int n) void
+        +Display(Grid)
+        +BasicRules (bool state, int neighbors) void
+        +getGrid() Grid&
+    }
+    
+    
+    CellState <|-- AliveState
+    CellState <|-- DeadState
+    Cell --> CellState
+    Grid *-- Cell
+    Game --> Grid
