@@ -4,15 +4,17 @@
 #include <string>
 #include "Cell.h"
 
+using namespace std;
+
 class Grid {
 private:
-    std::vector<std::vector<Cell>> cells;
+    vector<vector<Cell>> cells;
     int rows;
     int cols;
 
 public:
     Grid(int rows, int cols);
-    void loadFromFile(std::string filename);
+    void loadFromFile(string filename);
     Cell& getCell(int row, int col);
     int countNeighbors(int row, int col);
     int getRows() const;

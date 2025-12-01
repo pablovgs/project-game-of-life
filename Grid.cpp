@@ -46,7 +46,7 @@ void Grid::loadFromFile(string filename) {
     string ligne;
     getline(fichier, ligne);
     
-    // Read each line of the file
+    // Read each line of the file except the first one
     for (int i = 0; i < rows; i++) {
         if (!getline(fichier, ligne)) {
             cout << "Erreur: Pas assez de lignes dans le fichier" << endl;
