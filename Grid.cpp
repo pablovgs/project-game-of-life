@@ -1,0 +1,87 @@
+
+#include "Grid.h"
+#include <fstream>
+#include <iostream>
+#include <algorithm>
+
+using namespace std;
+
+Grid::Grid(int rows, int cols) : rows(rows), cols(cols) {
+    cells.resize(rows, vector<Cell>(cols));
+}
+
+int Grid::getRows() const {
+    return rows;
+}
+
+int Grid::getCols() const {
+    return cols;
+}
+
+void Grid::loadFromFile(string filename) {
+    ifstream fichier(filename);
+    
+    if (!fichier.is_open()) {
+        cout << "Erreur: Impossible d'ouvrir le fichier " << filename << endl;
+        return;
+    }
+
+
+    int heigh, width;
+    fichier >> heigh >> width;
+    
+    if (heigh <= 0 || width <= 0) {
+        cout << "Erreur: Dimensions invalides" << endl;
+        fichier.close();
+        return;
+    }
+
+    // Change grid size beacause the constructor have default size
+    rows = heigh;
+    cols = width;
+    cells.clear();
+    cells.resize(rows, vector<Cell>(cols));
+
+    // Read the digits of the first line and ignore the \n
+    string ligne;
+    getline(fichier, ligne);
+    
+    // Read each line of the file
+    for (int i = 0; i < rows; i++) {
+        if (!getline(fichier, ligne)) {
+            cout << "Erreur: Pas assez de lignes dans le fichier" << endl;
+            fichier.close();
+            return;
+        }
+        
+        // Remover spaces 
+        ligne.erase(remove(ligne.begin(), ligne.end(), ' '), ligne.end());
+        
+        if (ligne.length() < cols) {
+            cout << "Erreur: Ligne " << i << " trop courte" << endl;
+            fichier.close();
+            return;
+        }
+        
+        //Initialisation of the cells with their state
+        for (int j = 0; j < cols; j++) {
+            if (ligne[j] == '1') {
+                cells[i][j].setState(new AliveState());
+            } else {
+                cells[i][j].setState(new DeadState());
+            }
+        }
+    }
+    
+    fichier.close();
+    cout << "Grille chargée: " << rows << "x" << cols << endl;
+}
+
+Cell& Grid::getCell(int row, int col) {
+    return cells[row][col];
+}
+
+int Grid::countNeighbors(int row, int col) {
+
+}
+
