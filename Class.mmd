@@ -1,8 +1,8 @@
 classDiagram
-    
+   
     %% Ajouter l'extension Mermaid Chart 
     %% Crtl+Shift+P -> "Mermaid Chart Preview Diagram"
-
+    
     class CellState {
         <<abstract>>
         #alive: bool
@@ -19,7 +19,6 @@ classDiagram
         +DeadState()
     }
 
-
     class Cell {
         -state: CellState*
         -nextState: CellState*
@@ -31,7 +30,6 @@ classDiagram
         +update() void
     }
     
-
     class Grid {
         -cells: vector~vector~Cell~~
         -rows: int
@@ -44,25 +42,45 @@ classDiagram
         +getCols() int
     }
     
-
     class Rule {
         +conwayRule(bool currentState, int neighbors) bool
     }
     
-
     class Game {
         -grid: Grid
         -rule: Rule*
         -iteration: int
+        -initialFilename: string
         +Game(string filename, Rule* rule)
         +~Game()
         +step() void
-        +runConsole(int steps) void
-        +display() void
+        +reset() void
+        +runConsoleToFiles(int steps, string outputFolder) void
         +getGrid() Grid&
         +getIteration() int
+        -saveGridToFile(string filename) void
     }
     
+    class GameGraphics {
+        -game: Game&
+        -window: RenderWindow
+        -cellSize: float
+        -font: Font
+        -isPaused: bool
+        -autoPlay: bool
+        -delayBetweenSteps: float
+        -clock: Clock
+        +GameGraphics(Game& game, int width, int height)
+        +~GameGraphics()
+        +run() void
+        +setSpeed(float seconds) void
+        +togglePause() void
+        -handleEvents() void
+        -update() void
+        -draw() void
+        -drawGrid() void
+        -drawUI() void
+    }
     
     CellState <|-- AliveState
     CellState <|-- DeadState
@@ -70,3 +88,4 @@ classDiagram
     Grid *-- Cell
     Game *-- Grid 
     Game --> Rule
+    GameGraphics --> Game
