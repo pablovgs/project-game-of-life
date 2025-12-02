@@ -82,6 +82,26 @@ Cell& Grid::getCell(int row, int col) {
 }
 
 int Grid::countNeighbors(int row, int col) {
-
+    int count = 0;
+    // Run through the 3x3 grid around the cell
+    for (int i = -1; i <= 1; i++) {
+        for (int j = -1; j <= 1; j++) {
+            // Ignore the cell itself
+            if (i == 0 && j == 0) continue;
+            
+            int newRow = row + i;
+            int newCol = col + j;
+            
+            // Check boundaries
+            if (newRow >= 0 && newRow < rows && newCol >= 0 && newCol < cols) {
+                if (cells[newRow][newCol].isAlive()) {
+                    count++;
+                }
+            }
+        }
+    }
+    
+    return count;
 }
+
 
