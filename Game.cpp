@@ -43,7 +43,6 @@ void Game::step() {
         }
     }
     
-    // Phase 2 : Appliquer tous les changements
     for (int i = 0; i < grid.getRows(); i++) {
         for (int j = 0; j < grid.getCols(); j++) {
             grid.getCell(i, j).update();
@@ -55,9 +54,35 @@ void Game::step() {
 
 
 
-void Game::runConsoleToFiles(int steps, string outputFolder) {}
+void Game::runConsoleToFiles(int steps, string outputFolder) {
+    filesystem::create_directory(outputFolder);
+    
+    string filename = outputFolder + "/generation_" + to_string(iteration) + ".txt";
+    saveGridToFile(filename);    
+
+    for (int i = 0; i < steps; i++) {
+        step();  
+        filename = outputFolder + "/generation_" + to_string(iteration) + ".txt";
+        saveGridToFile(filename);
+    }
+}
 
 
 
-
-void Game::saveGridToFile(string filename) {}
+void Game::saveGridToFile(string filename) {
+    //Save the current grid state to a file
+    ofstream outFile(filename);
+    if (!outFile.is_open()) {
+        cout << "Erreur d'ouverture du fichier : " << filename << endl;
+        return;
+    }
+    
+    for (int i = 0; i < grid.getRows(); i++) {
+        for (int j = 0; j < grid.getCols(); j++) {
+            outFile << (grid.getCell(i, j).isAlive() ? '1' : '0 ');
+        }
+        outFile << endl;
+    }
+    
+    outFile.close();
+}

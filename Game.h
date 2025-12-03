@@ -3,24 +3,25 @@
 #include "Rule.h"
 #include <string>
 
+using namespace std;
 
 class Game {
 private:
     Grid grid;
     Rule* rule;
     int iteration;
-    std::string initialFilename;
+    string initialFilename;
     
     //Private method
-    void saveGridToFile(std::string filename);
+    void saveGridToFile(string filename);
 
 public:
-    Game(std::string filename, Rule* rule);
+    Game(string filename, Rule* rule);
     ~Game();
     Grid& getGrid();
     int getIteration() const;  
     void step();
     void reset();
-    void runConsoleToFiles(int steps, std::string outputFolder);
+    void runConsoleToFiles(int steps, string outputFolder);
 
 };
