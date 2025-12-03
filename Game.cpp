@@ -28,7 +28,30 @@ int Game::getIteration() const {
 }
 
 //Step by-step simulation
-void Game::step() {}
+void Game::step() {
+        for (int i = 0; i < grid.getRows(); i++) {
+        for (int j = 0; j < grid.getCols(); j++) {
+            int neighbors = grid.countNeighbors(i, j);
+            bool currentState = grid.getCell(i, j).isAlive();
+            bool nextState = rule->conwayRule(currentState, neighbors);
+            
+            if (nextState) {
+                grid.getCell(i, j).prepareNext(new AliveState());
+            } else {
+                grid.getCell(i, j).prepareNext(new DeadState());
+            }
+        }
+    }
+    
+    // Phase 2 : Appliquer tous les changements
+    for (int i = 0; i < grid.getRows(); i++) {
+        for (int j = 0; j < grid.getCols(); j++) {
+            grid.getCell(i, j).update();
+        }
+    }
+    
+    iteration++;
+}
 
 
 
