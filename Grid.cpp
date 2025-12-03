@@ -74,7 +74,6 @@ void Grid::loadFromFile(string filename) {
     }
     
     fichier.close();
-    cout << "Grille chargée: " << rows << "x" << cols << endl;
 }
 
 Cell& Grid::getCell(int row, int col) {
