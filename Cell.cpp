@@ -4,6 +4,22 @@
 
 Cell::Cell() : state(new DeadState()), nextState(nullptr) {}
 
+Cell::Cell(const Cell& other) : nextState(nullptr) {
+    if (other.state->isAlive()) {
+        state = new AliveState();
+    } else {
+        state = new DeadState();
+    }
+    
+    if (other.nextState != nullptr) {
+        if (other.nextState->isAlive()) {
+            nextState = new AliveState();
+        } else {
+            nextState = new DeadState();
+        }
+    }
+}
+
 Cell::~Cell() {
     delete state;
     if (nextState != nullptr) {

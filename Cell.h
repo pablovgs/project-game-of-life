@@ -8,6 +8,7 @@ private:
     
 public:
     Cell();
+    Cell(const Cell& other);  
     ~Cell();
     bool isAlive() const;
     void setState(CellState* newState);
