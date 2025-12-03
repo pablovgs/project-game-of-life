@@ -1,6 +1,8 @@
 #pragma once
 #include "Grid.h"
 #include "Rule.h"
+#include "AliveState.h"
+#include "DeadState.h"
 #include <string>
 
 using namespace std;

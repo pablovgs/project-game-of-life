@@ -1,5 +1,7 @@
 #pragma once 
 #include "CellState.h"
+#include "AliveState.h"
+#include "DeadState.h"
 
 class Cell {
 private:

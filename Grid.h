@@ -3,6 +3,8 @@
 #include <vector>
 #include <string>
 #include "Cell.h"
+#include "AliveState.h"
+#include "DeadState.h"
 
 using namespace std;
 

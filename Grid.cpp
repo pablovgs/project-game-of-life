@@ -61,7 +61,7 @@ void Grid::loadFromFile(string filename) {
         // Remover spaces 
         ligne.erase(remove(ligne.begin(), ligne.end(), ' '), ligne.end());
         
-        if (ligne.length() < cols) {
+        if ((int)ligne.length() < cols) {
             cout << "Erreur: Ligne " << i << " trop courte" << endl;
             fichier.close();
             return;
