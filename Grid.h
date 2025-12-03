@@ -11,7 +11,7 @@ private:
     vector<vector<Cell>> cells;
     int rows;
     int cols;
-
+    
 public:
     Grid(int rows, int cols);
     void loadFromFile(string filename);

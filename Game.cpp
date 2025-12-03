@@ -79,7 +79,7 @@ void Game::saveGridToFile(string filename) {
     
     for (int i = 0; i < grid.getRows(); i++) {
         for (int j = 0; j < grid.getCols(); j++) {
-            outFile << (grid.getCell(i, j).isAlive() ? '1' : '0 ');
+            outFile << (grid.getCell(i, j).isAlive() ? '1' : '0');
         }
         outFile << endl;
     }

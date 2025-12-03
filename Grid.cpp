@@ -7,7 +7,9 @@
 using namespace std;
 
 Grid::Grid(int rows, int cols) : rows(rows), cols(cols) {
-    cells.resize(rows, vector<Cell>(cols));
+    if (rows > 0 && cols > 0) {
+        cells.resize(rows, vector<Cell>(cols));
+    }
 }
 
 int Grid::getRows() const {
