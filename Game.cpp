@@ -1,4 +1,6 @@
 #include "Game.h"
+#include "AliveState.h"
+#include "DeadState.h"
 #include <fstream> // Read and Write files
 #include <iostream>
 #include <filesystem> //Create directory

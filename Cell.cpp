@@ -1,5 +1,7 @@
 #include "Cell.h"
 #include "CellState.h"
+#include "AliveState.h"
+#include "DeadState.h"
 
 
 Cell::Cell() : state(new DeadState()), nextState(nullptr) {}

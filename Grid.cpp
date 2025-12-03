@@ -1,5 +1,7 @@
 
 #include "Grid.h"
+#include "AliveState.h"
+#include "DeadState.h"
 #include <fstream>
 #include <iostream>
 #include <algorithm>
