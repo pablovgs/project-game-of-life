@@ -7,21 +7,21 @@
 using namespace std;
 
 void test_cell_creation() {
-    cout << "Test: Création d'une cellule..." << endl;
+    cout << "Test: Creation d'une cellule..." << endl;
     
     Cell cell;
 
     if (cell.isAlive() == false) {
-        cout << "Cellule créée avec le bon etat ( mort par default)" << endl;
+        cout << "  Cellule cree avec le bon etat ( mort par default)" << endl;
     } 
     else {
-        cout << " Erreur dans la création de la cellule" << endl;
+        cout << "  Erreur dans la creation de la cellule" << endl;
 
     }
 }
 
 void test_cell_set_state() {
-    cout << "Test: Changement d'état d'une cellule..." << endl;
+    cout << "Test: Changement d'etat d'une cellule..." << endl;
     
     Cell cell;
     
@@ -29,50 +29,50 @@ void test_cell_set_state() {
     cell.setState(new AliveState());
 
     if (cell.isAlive() == true) {
-        cout << "La Cell est devenue vivante" << endl;
+        cout << "  La Cell est devenue vivante" << endl;
     } 
     else {
-        cout << "Erreur dans le changemnt d'etat" << endl;
+        cout << "  Erreur dans le changemnt d'etat" << endl;
 
     }
     
     cell.setState(new DeadState());
     if(cell.isAlive() == false) {
-        cout << "La Cell est devenue morte" << endl;
+        cout << "  La Cell est devenue morte" << endl;
     } 
     else {
-        cout << "Erreur dans le changemnt d'etat" << endl;
+        cout << "  Erreur dans le changemnt d'etat" << endl;
 
     }
     
-    cout << "Tout les changements d'etat possible dans setState() fonctionne" << endl;
+    cout << "  Tout les changements d'etat possible dans setState() fonctionne" << endl;
 }
 
 void test_cell_prepare_and_update() {
-    cout << "Test: Préparation et mise à jour..." << endl;
+    cout << "Test: Preparation et mise a jour..." << endl;
     
     Cell cell;
     cell.setState(new DeadState());
     
     cell.prepareNext(new AliveState());
     if (cell.isAlive() == false) {
-        cout << "La cellule est toujours morte avant update()" << endl;
+        cout << "  La cellule est toujours morte avant update()" << endl;
     } 
     else {
-        cout << "Erreur: La cellule ne devrait pas encore avoir changé d'état" << endl;
+        cout << "  Erreur: La cellule ne devrait pas encore avoir change d'état" << endl;
 
     }
     
     cell.update();
     if(cell.isAlive() == true) {
-        cout << "La cellule est maintenant vivante après update()" << endl;
+        cout << "  La cellule est maintenant vivante apres update()" << endl;
     } 
     else {
-        cout << "Erreur: La cellule devrait être vivante après update()" << endl;
+        cout << "  Erreur: La cellule devrait être vivante apres update()" << endl;
 
     }
     
-    cout << "Les methodes prepareNext() et update() fonctionnent" << endl;
+    cout << "  Les methodes prepareNext() et update() fonctionnent" << endl;
 }
 
 void test_cell_copy_constructor() {
@@ -84,23 +84,23 @@ void test_cell_copy_constructor() {
     Cell cell2(cell1);  // Copie
     
     if(cell2.isAlive() == true) {
-        cout << "La cellule copiée est vivante comme l'originale" << endl;
+        cout << "  La cellule copiee est vivante comme l'originale" << endl;
     } 
     else {
-        cout << "Erreur: La cellule copiée devrait être vivante" << endl;
+        cout << "  Erreur: La cellule copiee devrait etre vivante" << endl;
 
     }
     
     // Vérifier que ce sont des copies indépendantes
     cell1.setState(new DeadState());
     if(cell1.isAlive() == false && cell2.isAlive() == true) {
-        cout << "Les cellules sont indépendantes après la copie" << endl;
+        cout << "  Les cellules sont independantes apres la copie" << endl;
     } 
     else {
-        cout << "Erreur: Les cellules ne sont pas indépendantes après la copie" << endl;
+        cout << "  Erreur: Les cellules ne sont pas independantes après la copie" << endl;
 
     }    
-    cout << "Le onstructeur de copie fonctionne" << endl;
+    cout << "  Le constructeur par copie fonctionne" << endl;
 }
 
 void run_cell_tests() {
@@ -109,5 +109,5 @@ void run_cell_tests() {
     test_cell_set_state();
     test_cell_prepare_and_update();
     test_cell_copy_constructor();
-    cout << "Tous les tests sont bons \n" << endl;
+    cout << "===Tous les tests sont bons===\n" << endl;
 }
