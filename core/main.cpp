@@ -1,6 +1,6 @@
 #include "Game.h"
 #include "Rule.h"
-#include "GameGraphics.h"
+#include "../GUI/GameGraphics.h"
 #include <iostream>
 
 using namespace std;

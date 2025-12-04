@@ -1,6 +1,6 @@
 #include "GameGraphics.h"
-#include "AliveState.h"
-#include "DeadState.h"
+#include "../core/AliveState.h"
+#include "../core/DeadState.h"
 #include <iostream>
 #include <cmath>
 

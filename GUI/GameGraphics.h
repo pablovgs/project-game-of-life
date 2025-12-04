@@ -1,7 +1,7 @@
 #pragma once
-#include "Game.h"
-#include "AliveState.h"
-#include "DeadState.h"
+#include "../core/Game.h"
+#include "../core/AliveState.h"
+#include "../core/DeadState.h"
 #include <SFML/Graphics.hpp>
 #include <SFML/System.hpp>
 #include <SFML/Window.hpp>
