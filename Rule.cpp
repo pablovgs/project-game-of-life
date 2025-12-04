@@ -4,14 +4,14 @@ bool Rule::conwayRule(bool currentState, int neighbors) {
     
     bool newState = false;
     
-    if (currentState) {
+    if (currentState) { //Stay alive condition
         if (neighbors == 2 || neighbors == 3) {
             newState = true; 
         }
 
     }
 
-    else {
+    else { //Birth condition
 
         if (neighbors == 3) {
             newState = true; 

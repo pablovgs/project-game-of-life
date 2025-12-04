@@ -9,11 +9,11 @@ using namespace std;
 
 
 Game::Game(string filename, Rule* rule) :
-    grid(0, 0), rule(rule), iteration(0), initialFilename(filename) {
+    grid(0, 0), rule(rule), iteration(0), initialFilename(filename) { //Constructor
     grid.loadFromFile(filename);
 }
 
-Game::~Game() {}
+Game::~Game() {} //Destructor
 
 // Reset the game
 void Game::reset() {
@@ -55,7 +55,7 @@ void Game::step() {
 }
 
 
-
+// Run simulation in console mode and save each generation to files
 void Game::runConsoleToFiles(int steps, string outputFolder) {
     filesystem::create_directory(outputFolder);
     

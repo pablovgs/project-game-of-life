@@ -8,12 +8,13 @@
 
 using namespace std;
 
-Grid::Grid(int rows, int cols) : rows(rows), cols(cols) {
+Grid::Grid(int rows, int cols) : rows(rows), cols(cols) { //Constructor
     if (rows > 0 && cols > 0) {
         cells.resize(rows, vector<Cell>(cols));
     }
 }
 
+// Getters
 int Grid::getRows() const {
     return rows;
 }
@@ -22,7 +23,12 @@ int Grid::getCols() const {
     return cols;
 }
 
-void Grid::loadFromFile(string filename) {
+
+Cell& Grid::getCell(int row, int col) { //Getter for a cell
+    return cells[row][col];
+}
+
+void Grid::loadFromFile(string filename) { //Load grid from a file
     ifstream fichier(filename);
     
     if (!fichier.is_open()) {
@@ -30,9 +36,8 @@ void Grid::loadFromFile(string filename) {
         return;
     }
 
-
     int heigh, width;
-    fichier >> heigh >> width;
+    fichier >> heigh >> width; //Read the dimensions from the first line
     
     if (heigh <= 0 || width <= 0) {
         cout << "Erreur: Dimensions invalides" << endl;
@@ -80,9 +85,6 @@ void Grid::loadFromFile(string filename) {
     fichier.close();
 }
 
-Cell& Grid::getCell(int row, int col) {
-    return cells[row][col];
-}
 
 int Grid::countNeighbors(int row, int col) {
     int count = 0;
