@@ -1,78 +1,241 @@
-# **Jeu de la Vie – Conway's Game of Life**
+# Conway's Game of Life 🎮
 
-*Projet réalisé par **Théo** et **Pablo***  
-*Une implémentation orientée objet en C++ du célèbre automate cellulaire conçu par John Conway.*
-
----
-
-## **📋 Description du Projet**
-
-Ce projet propose une version C++ moderne et orientée objet du **Jeu de la Vie**, un automate cellulaire simple en apparence mais capable de générer des comportements émergents complexes.  
-*L’objectif est de simuler l’évolution d’une grille de cellules vivantes et mortes selon un ensemble de règles immuables.*
-
-Il sert à :  
-- comprendre la manipulation de grilles en 2D  
-- pratiquer l’architecture orientée objet (classes, méthodes, encapsulation)  
-- expérimenter la simulation itérative  
-- visualiser un système dynamique évolutif  
+Une implémentation en C++ du célèbre automate cellulaire de John Conway avec interface console et graphique (SFML).
 
 ---
 
-## **🎯 Règles du Jeu**
+## Le Jeu de la Vie
 
-Le jeu se déroule sur une **grille 2D** où chaque cellule peut être :  
-- **vivante (1)**  
-- **morte (0)**  
+Le **Jeu de la Vie** (Game of Life) est un automate cellulaire inventé par le mathématicien John Conway en 1970. Ce n'est pas un jeu au sens traditionnel, mais une simulation où des cellules évoluent selon des règles simples.
 
-À chaque itération, chaque cellule évolue selon les règles suivantes :
+### Règles
 
-### **1️⃣ Naissance**  
-Une **cellule morte** ayant **exactement 3 voisines vivantes** devient vivante.
+Chaque cellule peut être **vivante** (■) ou **morte** (□). À chaque génération, l'état des cellules change selon ces règles :
 
-### **2️⃣ Survie**  
-Une **cellule vivante** ayant **2 ou 3 voisines vivantes** reste vivante.
+1. **Survie** : Une cellule vivante avec 2 ou 3 voisins vivants survit
+2. **Mort par isolement** : Une cellule vivante avec 0 ou 1 voisin meurt
+3. **Mort par surpopulation** : Une cellule vivante avec 4+ voisins meurt
+4. **Naissance** : Une cellule morte avec exactement 3 voisins vivants devient vivante
 
-### **3️⃣ Mort**  
-Dans tous les autres cas, la cellule **meurt** :  
-- *solitude* (moins de 2 voisines vivantes)  
-- *surpopulation* (plus de 3 voisines vivantes)
-
-### **Voisinage**  
-Chaque cellule possède un voisinage composé de **8 cellules adjacentes** :  
-- horizontales  
-- verticales  
-- diagonales  
-
-*Ce modèle simple permet pourtant de produire des motifs célèbres comme les oscillateurs, planeurs (gliders), ou structures stables.*
 
 ---
 
-## **🛠️ Technologies / Concepts Utilisés**
+##  Architecture du projet
+```
+PROJECT-GAME-OF-LIFE/
+├── core/                         # Cœur logique du jeu
+│   ├── CellState.h
+│   ├── CellState.cpp             
+│   ├── AliveState.h
+│   ├── AliveState.cpp            
+│   ├── DeadState.h
+│   ├── DeadState.cpp             
+│   ├── Cell.h
+│   ├── Cell.cpp                  
+│   ├── Grid.h
+│   ├── Grid.cpp                  
+│   ├── Rule.h
+│   ├── Rule.cpp                  
+│   ├── Game.h
+│   ├── Game.cpp                  
+│   └── main.cpp                 
+│
+├── GUI/                          # Interface graphique (SFML)
+│   ├── GameGraphics.h
+│   └── GameGraphics.cpp          
+│
+├── test/                         
+│   ├── test_cellstate.cpp
+│   ├── test_cell.cpp
+│   ├── test_grid.cpp
+│   ├── test_rule.cpp
+│   ├── test_game.cpp
+│   └── run_all_tests.cpp         # Exécutable regroupant tous les tests
+│
+├── diagrams/                     # Diagrammes UML
+│   ├── Class.mmd                 
+│   ├── Activity.mmd              
+│   └── Diagrams of Sequences/    # Diagrammes de séquence
+│       ├── Console.mmd
+│       ├── Graphics.mmd
+│       └── One_generation.mmd    
+│
+└── README.md                     # Documentation
 
-- **C++ orienté objet (classes et encapsulation)**  
-- manipulation de tableaux 2D  
-- gestion d’itérations et d’états successifs  
-- logique d’automate cellulaire  
-- affichage console simple  
-- séparation du code en fichiers `.hpp` et `.cpp`
+```
 
 ---
 
-## **🚀 Objectifs Pédagogiques**
+## Fonctionnement du programme
 
-- Approfondir la conception orientée objet  
-- Apprendre à structurer une simulation  
-- Utiliser de manière efficace les boucles, conditions et tableaux  
-- *Comprendre comment des règles très simples peuvent produire des comportements complexes*
+### Architecture Orientée Objet
+
+Le programme utilise plusieurs design patterns :
+
+- **State Pattern** : `CellState`, `AliveState`, `DeadState` pour gérer l'état des cellules
+- **MVC Pattern** : Séparation logique (Game), modèle (Grid/Cell), vue (GameGraphics)
+- **Strategy Pattern** : `Rule` pour permettre différentes règles de jeu
+
+### Flux d'exécution
+
+1. **Chargement** : Lecture d'un fichier texte contenant la grille initiale
+2. **Initialisation** : Création des objets `Game`, `Grid`, `Cell`
+3. **Simulation** :
+   - Phase 1 : Calcul du prochain état de chaque cellule (`prepareNext()`)
+   - Phase 2 : Application simultanée des changements (`update()`)
+   - Incrémentation du compteur de génération
+4. **Affichage** : Console (fichiers) ou graphique (SFML)
 
 ---
 
-## **📜 Auteurs**
+## Installation
 
-Projet réalisé par :  
-- **Théo**  
-- **Pablo**
+### Prérequis
+
+- **Compilateur C++17** (g++, clang++)
+- **SFML 2.5+** (pour l'interface graphique)
+
+### Installation de SFML
+
+**Ubuntu/Debian :**
+```bash
+sudo apt-get install libsfml-dev
+```
 
 ---
 
-*Merci d’avoir consulté ce projet ! Toute suggestion ou amélioration est bienvenue.*  
+## Compilation
+
+
+### Manuellement :
+```bash
+
+    g++ core/*.cpp GUI/*.cpp test/*.cpp -o game_of_life -lsfml-graphics -lsfml-window -lsfml-system
+
+```
+
+---
+
+## 🎮 Utilisation
+
+### Mode Graphique (par défaut)
+
+Lance l'interface SFML interactive :
+```bash
+./game_of_life examples/glider.txt
+# ou
+./game_of_life examples/glider.txt graphics
+```
+
+**Contrôles :**
+- `Space` : Pause/Play
+- `↑` : Augmenter la vitesse
+- `↓` : Diminuer la vitesse
+- `→` : Avancer d'une génération (mode manuel)
+- `R` : Reset (retour à l'état initial)
+- `Clic gauche` : Inverser l'état d'une cellule
+- `Échap` : Quitter
+
+---
+
+### Mode Console
+
+Génère des fichiers pour chaque génération :
+```bash
+./game_of_life examples/glider.txt console 50
+```
+
+**Résultat :**
+- Crée un dossier `glider_out/`
+- Génère 51 fichiers : `generation_0.txt` à `generation_50.txt`
+- Chaque fichier contient l'état de la grille à cette génération
+
+---
+
+### Tests Unitaires
+
+Lance tous les tests automatiques :
+```bash
+./game_of_life test
+```
+
+**Tests inclus :**
+- Tests des états (CellState, AliveState, DeadState)
+- Tests des cellules (création, états, copie)
+- Tests de la grille (chargement, voisins)
+- Tests des règles de Conway
+- Tests du jeu complet (step, reset, fichiers)
+
+---
+
+
+
+## Tests
+
+Le projet inclut une suite complète de tests unitaires :
+```bash
+./game_of_life test
+```
+
+**Couverture :**
+-  25+ tests unitaires
+-  Toutes les classes testées
+-  Scénarios réels (blinker, glider)
+-  Gestion d'erreurs
+
+---
+
+## Technologies utilisées
+
+- **C++17** : Standard moderne avec `filesystem`
+- **SFML 2.5+** : Bibliothèque graphique multiplateforme
+- **Design Patterns** : State, MVC, Strategy
+- **Tests unitaires** : Framework custom avec `assert`
+
+---
+
+## 📚 Ressources
+
+- [Wikipedia - Jeu de la Vie](https://fr.wikipedia.org/wiki/Jeu_de_la_vie)
+- [Documentation SFML](https://www.sfml-dev.org/documentation/)
+- [LifeWiki - Patterns](https://conwaylife.com/wiki/)
+
+---
+
+## 👨‍💻 Auteur
+
+Projet réalisé par Théo PRIEUR et Pablo VILLEGAS-ALVAREZ
+
+
+---
+
+## 🎯 Fonctionnalités
+
+- ✅ Simulation du Jeu de la Vie de Conway
+- ✅ Interface graphique interactive (SFML)
+- ✅ Mode console avec export fichiers
+- ✅ Contrôle de la vitesse de simulation
+- ✅ Pause/Play, Reset
+- ✅ Modification manuelle des cellules (clic)
+- ✅ Compteur de cellules vivantes
+- ✅ Tests unitaires complets
+- ✅ Support de grilles de toute taille
+- ✅ Patterns classiques fournis
+
+---
+
+## Résolution de problèmes
+
+### Police non trouvée
+
+Le programme fonctionne sans police, mais le texte ne s'affichera pas. Pour corriger :
+```bash
+# Linux - installer les polices DejaVu
+sudo apt-get install fonts-dejavu
+
+# Ou télécharger une police .ttf dans le dossier du projet
+```
+
+Merci !
+
+```
