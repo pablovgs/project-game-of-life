@@ -1,0 +1,74 @@
+sequenceDiagram
+
+%% Ajouter l'extension Mermaid Chart 
+%% Crtl+Shift+P -> "Mermaid Chart Preview Diagram"
+
+actor User
+participant Main
+participant GameGraphics
+participant Game
+participant Grid
+participant SFML
+
+User->>Main: ./game_of_life glider.txt graphics
+Main->>Game: Game("glider.txt", &rule)
+Main->>GameGraphics: GameGraphics(game, 800, 1000)
+GameGraphics->>SFML: create(VideoMode, titre)
+GameGraphics->>SFML: setFramerateLimit(30)
+GameGraphics->>GameGraphics: Calculer cellSize
+GameGraphics->>SFML: font.loadFromFile()
+
+Main->>GameGraphics: run()
+
+loop Tant que fenêtre ouverte
+    GameGraphics->>GameGraphics: handleEvents()
+    GameGraphics->>SFML: pollEvent(event)
+    
+    alt Touche Space pressée
+        User->>GameGraphics: Appuyer sur Space
+        GameGraphics->>GameGraphics: togglePause()
+    else Touche R pressée
+        User->>GameGraphics: Appuyer sur R
+        GameGraphics->>Game: reset()
+        Game->>Grid: loadFromFile(initialFilename)
+    else Flèche haut/bas
+        User->>GameGraphics: Ajuster vitesse
+        GameGraphics->>GameGraphics: setSpeed(newSpeed)
+    else Flèche droite
+        User->>GameGraphics: Avancer d'une génération manuellement
+        GameGraphics->>Game: step()
+    end
+    
+    GameGraphics->>GameGraphics: update()
+    
+    alt Pas en pause
+        GameGraphics->>SFML: clock.getElapsedTime()
+        SFML-->>GameGraphics: elapsed
+        
+        alt Temps écoulé >= delayBetweenSteps
+            GameGraphics->>Game: step()
+            Game->>Game: Calculer prochaine génération
+            GameGraphics->>SFML: clock.restart()
+        end
+    end
+    
+    GameGraphics->>GameGraphics: draw()
+    GameGraphics->>SFML: clear(Color)
+    GameGraphics->>GameGraphics: drawGrid()
+    
+    loop Pour chaque cellule
+        GameGraphics->>Game: getGrid().getCell(i,j)
+        Game->>Grid: getCell(i,j)
+        Grid-->>GameGraphics: Cell&
+        GameGraphics->>SFML: draw(RectangleShape)
+    end
+    
+    GameGraphics->>GameGraphics: drawUI()
+    GameGraphics->>Game: getIteration()
+    GameGraphics->>SFML: draw(Text)
+    
+    GameGraphics->>SFML: display()
+end
+
+GameGraphics->>SFML: window.close()
+GameGraphics-->>Main: Terminé
