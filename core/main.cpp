@@ -54,8 +54,14 @@ int main(int argc, char* argv[]) {
             return 1;
         }
         
-        size_t pos = filename.find_last_of('.');
-        string basename = (pos != string::npos) ? filename.substr(0, pos) : filename;
+        size_t pos = filename.find_last_of('.'); //Find the position of the last dot
+        string basename;
+        if (pos != string::npos) {
+            basename = filename.substr(0, pos);
+        } 
+        else {
+            basename = filename;
+        }
         string outputFolder = basename + "_out";
         
         cout << "Mode console: " << steps << " générations" << endl;

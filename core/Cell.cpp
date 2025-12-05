@@ -4,9 +4,9 @@
 #include "DeadState.h"
 
 
-Cell::Cell() : state(new DeadState()), nextState(nullptr) {}
+Cell::Cell() : state(new DeadState()), nextState(nullptr) {} // Default constructor initializes cell as dead
 
-Cell::Cell(const Cell& other) : nextState(nullptr) {
+Cell::Cell(const Cell& other) : nextState(nullptr) { //Constructor by copy
     if (other.state->isAlive()) {
         state = new AliveState();
     } else {
@@ -22,30 +22,30 @@ Cell::Cell(const Cell& other) : nextState(nullptr) {
     }
 }
 
-Cell::~Cell() {
+Cell::~Cell() { //Destructor
     delete state;
     if (nextState != nullptr) {
         delete nextState;
     }
 }
 
-bool Cell::isAlive() const {
+bool Cell::isAlive() const { //Check if the cell is alive
     return state->isAlive();
 }
 
-void Cell::setState(CellState* newState) {
+void Cell::setState(CellState* newState) { //Set the current state of the cell
     delete state;
     state = newState;
 }
 
-void Cell::prepareNext(CellState* newState) {
+void Cell::prepareNext(CellState* newState) { //Prepare the next state of the cell
     if (nextState != nullptr) {
         delete nextState;
     }
     nextState = newState;
 }
 
-void Cell::update() {
+void Cell::update() { //Update the cell to its next state
     if (nextState != nullptr) {
         delete state;
         state = nextState;

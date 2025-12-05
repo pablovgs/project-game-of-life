@@ -15,8 +15,8 @@ Game::Game(string filename, Rule* rule) :
 
 Game::~Game() {} //Destructor
 
-// Reset the game
-void Game::reset() {
+
+void Game::reset() { //Reset the game to initial state
     grid.loadFromFile(initialFilename);
     iteration = 0;
 }
@@ -70,9 +70,8 @@ void Game::runConsoleToFiles(int steps, string outputFolder) {
 }
 
 
-
+//Save the current grid state to a file
 void Game::saveGridToFile(string filename) {
-    //Save the current grid state to a file
     ofstream outFile(filename);
     if (!outFile.is_open()) {
         cout << "Erreur d'ouverture du fichier : " << filename << endl;
