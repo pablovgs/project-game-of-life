@@ -1,0 +1,74 @@
+flowchart TD
+
+    %% Ajouter l'extension Mermaid Chart 
+    %% Crtl+Shift+P -> "Mermaid Chart Preview Diagram"
+
+    Start([Démarrage du programme]) --> CheckArgs{Arguments<br/>suffisants ?}
+    
+    CheckArgs -->|Non| ShowHelp[Afficher l'aide]
+    ShowHelp --> End1([Fin])
+
+    CheckArgs --> |Oui| F2{ + De deux <br/>arguments ?}
+
+    F2 -->|Oui| LoadFile[Charger le fichier de grille]
+    F2-->|Non| F3[Mode Test]
+    F3 --> End4([Fin])
+    LoadFile --> FileExists{Fichier<br/>existe ?}
+    
+    FileExists -->|Non| Error[Erreur : fichier introuvable]
+    Error --> End2([Fin])
+    
+    FileExists -->|Oui| CreateGame[Créer l'objet Game]
+    CreateGame --> CheckMode{Mode<br/>choisi ?}
+    
+    CheckMode -->|Console| ConsoleMode[Mode Console]
+    ConsoleMode-->F4{Le nombre de <br/>generation est > 0?}
+    F4-->|Oui|CreateOutputDir
+    F4-->|Non|End6([Fin])
+    CheckMode -->|Graphics| GraphicsMode[Mode Graphique]
+    
+    CreateOutputDir --> SaveInitial[Sauvegarder état initial]
+    SaveInitial --> LoopSteps{Plus de<br/>générations ?}
+    
+    LoopSteps -->|Oui| StepConsole[game.step]
+    StepConsole --> SaveToFile[Sauvegarder dans fichier]
+    SaveToFile --> LoopSteps
+    
+    LoopSteps -->|Non| EndConsole[Afficher résumé]
+    EndConsole --> End3([Fin])
+    
+    GraphicsMode --> CreateWindow[Créer fenêtre SFML]
+    CreateWindow --> InitGraphics[Initialiser interface]
+    InitGraphics --> GameLoop{Fenêtre<br/>ouverte ?}
+    
+    GameLoop -->|Oui| HandleEvents[Gérer événements]
+    HandleEvents --> CheckEvent{Type<br/>d'événement ?}
+    
+    CheckEvent -->|Close/Escape| CloseWindow[Fermer fenêtre]
+    CloseWindow-->End5([Fin])
+
+    CheckEvent -->|Space| TogglePause[Basculer pause]
+    TogglePause --> UpdateLogic
+    
+    CheckEvent -->|R| Reset[Reset du jeu]
+    Reset --> UpdateLogic
+    
+    CheckEvent -->|Flèches| ChangeSpeed[Modifier vitesse / <br/>Avancer d'une <br/>generation]
+    ChangeSpeed --> UpdateLogic
+    
+    UpdateLogic --> IsPaused{En pause ?}
+    IsPaused -->|Oui| DrawScreen
+    IsPaused -->|Non| CheckTime{Temps écoulé<br/>suffisant ?}
+    
+    CheckTime -->|Non| DrawScreen[Dessiner l'écran]
+    CheckTime -->|Oui| StepGraphics[game.step]
+    StepGraphics --> ResetClock[Redémarrer horloge]
+    ResetClock --> DrawScreen
+    
+    DrawScreen --> DrawGrid[Dessiner grille]
+    DrawGrid --> DrawUI[Dessiner interface]
+    DrawUI --> Display[Afficher]
+    Display --> GameLoop
+    
+    GameLoop -->|Non| EndGraphics([Fin])
+    
