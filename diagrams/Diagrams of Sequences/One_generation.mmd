@@ -1,0 +1,50 @@
+sequenceDiagram
+
+%% Ajouter l'extension Mermaid Chart 
+%% Crtl+Shift+P -> "Mermaid Chart Preview Diagram"
+
+actor User
+participant Main
+participant Game
+participant Grid
+participant Cell
+participant Rule
+participant CellState
+
+User->>Main: Lancer le programme
+Main->>Game: Game("glider.txt", &rule)
+Game->>Grid: loadFromFile("glider.txt")
+Grid->>Grid: Lire dimensions
+Grid->>Grid: Créer grille vide
+loop Pour chaque cellule
+    Grid->>Cell: setState(AliveState/DeadState)
+    Cell->>CellState: new AliveState() ou new DeadState()
+end
+Grid-->>Game: Grille chargée
+
+User->>Main: Demander avancement
+Main->>Game: step()
+
+loop Pour chaque cellule
+    Game->>Grid: countNeighbors(i, j)
+    Grid->>Cell: isAlive() sur les voisins
+    Cell->>CellState: isAlive()
+    CellState-->>Cell: true/false
+    Cell-->>Grid: État
+    Grid-->>Game: Nombre de voisins
+    
+    Game->>Rule: conwayRule(currentState, neighbors)
+    Rule-->>Game: nextState (true/false)
+    
+    Game->>Cell: prepareNext(new AliveState/DeadState)
+    Cell->>CellState: new AliveState() ou new DeadState()
+end
+
+loop Pour chaque cellule
+    Game->>Cell: update()
+    Cell->>Cell: state = nextState
+end
+
+Game->>Game: iteration++
+Game-->>Main: Génération terminée
+Main-->>User: Afficher résultat

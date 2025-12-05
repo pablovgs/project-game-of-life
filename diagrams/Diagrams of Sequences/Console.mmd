@@ -1,0 +1,41 @@
+sequenceDiagram
+
+%% Ajouter l'extension Mermaid Chart 
+%% Crtl+Shift+P -> "Mermaid Chart Preview Diagram"
+
+
+actor User
+participant Main
+participant Game
+participant Grid
+participant FileSystem
+
+User->>Main: ./game_of_life glider.txt console 10
+Main->>Game: Game("glider.txt", &rule)
+Main->>Game: runConsoleToFiles(10, "glider_out")
+
+Game->>FileSystem: create_directory("glider_out")
+
+Game->>Game: saveGridToFile("glider_out/generation_0.txt")
+Game->>FileSystem: ofstream("generation_0.txt")
+
+loop Pour chaque ligne
+    Game->>Grid: getCell(i, j).isAlive()
+    Game->>FileSystem: write("1" ou "0")
+end
+
+Game->>FileSystem: close()
+
+loop 10 fois
+    Game->>Game: step()
+    Game->>Grid: Pour chaque cellule
+    Game->>Game: Appliquer règles
+    
+    Game->>Game: saveGridToFile("generation_N.txt")
+    Game->>FileSystem: ofstream("generation_N.txt")
+    Game->>FileSystem: write(état de la grille)
+    Game->>FileSystem: close()
+end
+
+Game-->>Main: Simulation terminée
+Main-->>User: "11 fichiers créés dans glider_out/"
