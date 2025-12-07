@@ -11,7 +11,6 @@ int main(int argc, char* argv[]) {
     // Help message 
     if (argc < 2) {
         cout << "Usage: " << argv[0] << " <fichier_grille> [mode] [options]" << endl;
-        cout << "  mode: console ou graphics (défaut: graphics)" << endl;
         cout << "  -Pour console: " << argv[0] << " fichier.txt console <nb_steps>" << endl;
         cout << "  -Pour graphics: " << argv[0] << " fichier.txt graphics" << endl;
         cout << "  -Pour les tests unitaires: " << argv[0] << " test" << endl;

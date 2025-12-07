@@ -133,7 +133,6 @@ Lance l'interface SFML interactive :
 - `↓` : Diminuer la vitesse
 - `→` : Avancer d'une génération (mode manuel)
 - `R` : Reset (retour à l'état initial)
-- `Clic gauche` : Inverser l'état d'une cellule
 - `Échap` : Quitter
 
 ---
@@ -237,5 +236,3 @@ sudo apt-get install fonts-dejavu
 ```
 
 Merci !
-
-```
