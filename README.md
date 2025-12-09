@@ -167,23 +167,6 @@ Lance tous les tests automatiques :
 
 ---
 
-
-
-## Tests
-
-Le projet inclut une suite complète de tests unitaires :
-```bash
-./game_of_life test
-```
-
-**Couverture :**
--  25+ tests unitaires
--  Toutes les classes testées
--  Scénarios réels (blinker, glider)
--  Gestion d'erreurs
-
----
-
 ## Technologies utilisées
 
 - **C++17** : Standard moderne avec `filesystem`
